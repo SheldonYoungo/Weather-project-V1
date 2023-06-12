@@ -19,6 +19,10 @@ label, input, select{
     font-size: 1.7rem;
 }
 
+img {
+    width: 50%;
+}
+
 select {
     width: 50%;
 }
@@ -31,10 +35,24 @@ button {
     margin-top: 10px;
 }
 
-div {
+.wraper {
+    display: flex;
+    align-items: center;
+}
+
+.wraper div {
     font-size: 1.2rem;
     padding: 2%;
     margin-top: 8%;
     background-color: #f6fbff;
     border-radius: 10px;
+}
+
+.wraper div:first-child {
+    text-align: center;
+} 
+
+.wraper div:last-child {
+    width: fit-content;
+    height: fit-content;
 }

@@ -1,0 +1,36 @@
+<%- include('header') %>
+<body>
+
+    <h1>Weather Report</h1>
+
+    <div class="wraper">
+
+        <div class="container-fluid col-md-4" style="display: <%= containerDisplay %>;">
+            <h1><%= currentCity %></span></h1>
+            <img src="<%= imgURL %>">
+            <h3>
+                <%= weatherDescription %>
+                 <br> 
+                <%= temperature %> <%= temperatureSimbol %>
+            </h3>
+        </div>
+    
+        <div class="container-fluid col-md-4">
+    
+            <form action="/" method="post">
+                <label for="cityInput" class="form-label">City Name</label>
+                <input type="text" name="cityName" id="cityInput" placeholder='Enter your city'required>
+        
+                <label for="tempUnits" class="form-label">Measurement</label>
+                <select name="units" id="temUnits" required>
+                    <option value="standard">Standard</option>
+                    <option value="metric">Metric</option>
+                    <option value="imperial">Imperial</option>
+                </select>
+        
+                <button type="submit" class="btn btn-md btn-outline-dark">Go</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

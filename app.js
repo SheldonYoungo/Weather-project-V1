@@ -1,25 +1,27 @@
-const express = require('express');
-const https = require('https');
-const ejs = require('ejs');
+import express from 'express';
+import https from 'https';
+import 'dotenv/config';
+import ejs from 'ejs';
+
 const app = express();
 const port = 3000;
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended: true}));
-app.use(express.static(__dirname));
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.sendFile(`${__dirname}/index.ejs`);
+    res.render('index', {containerDisplay: 'none', currentCity: '', temperatureSimbol: '', imgURL: '', weatherDescription: ''});
 })
 
 app.post('/', (req, res) => {
 
-    const query = req.body.cityName; //City
-    const apiKey = process.env.API_KEY;
-    const tempUnit = req.body.units;
-    let tempSimbol;
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=${tempUnit}&appid=${apiKey}`;
+    const query = req.body.cityName; //City requested
+    const apiKey = process.env.API_KEY; //OpenWeather API Key
+    const tempUnit = req.body.units; //Temperature units
+    const APIurl = `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=${tempUnit}&appid=${apiKey}`; //API URL
     
+    let tempSimbol; //The variable where the temperature simbol will be stored
     switch (tempUnit) {
         case 'standard':
             tempSimbol = 'K';
@@ -34,7 +36,7 @@ app.post('/', (req, res) => {
             break;
     };
 
-    https.get(url, (response) => {
+    https.get(APIurl, (response) => {
     
         response.on('data', (data) => {
 
@@ -45,15 +47,14 @@ app.post('/', (req, res) => {
                 const imageURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
 
                 res.render('index', {
-                    cityName: weatherData.name,
-                    imgSrc: imageURL,
-                    temperature:  weatherData.weather[0].description,
+                    containerDisplay: 'block',
+                    currentCity: weatherData.name,
+                    imgURL: imageURL,
+                    temperature: weatherData.main.temp,
+                    weatherDescription:  weatherData.weather[0].description,
                     temperatureSimbol: tempSimbol
                 });
-    
-                // res.write(`<h1>The current temperature in ${weatherData.name} is: ${weatherData.main.temp} ${tempSimbol}</h1>`);
-                // res.write(`<p>The weather is currently ${weatherData.weather[0].description}</p>`);
-                // res.write(`<img src='${imageURL}'>`)
+
             } catch {
                 res.write('<h1>Error 404. The city you typed was not found.<h1>')
                 res.send();
