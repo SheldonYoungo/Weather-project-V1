@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.render('index', {containerDisplay: 'none', currentCity: '', temperatureSimbol: '', imgURL: '', weatherDescription: ''});
+    res.render('index', {containerDisplay: 'none', currentCity: '', temperature:'', temperatureSimbol: '', imgURL: '', weatherDescription: ''});
 })
 
 app.post('/', (req, res) => {
@@ -45,13 +45,14 @@ app.post('/', (req, res) => {
             try {
                 const icon = weatherData.weather[0].icon;
                 const imageURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+                const weatherDescrip = weatherData.weather[0].description;
 
                 res.render('index', {
                     containerDisplay: 'block',
                     currentCity: weatherData.name,
                     imgURL: imageURL,
                     temperature: weatherData.main.temp,
-                    weatherDescription:  weatherData.weather[0].description,
+                    weatherDescription:  weatherDescrip.charAt(0).toUpperCase() + weatherDescrip.slice(1),
                     temperatureSimbol: tempSimbol
                 });
 

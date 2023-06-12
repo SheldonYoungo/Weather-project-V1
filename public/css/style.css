@@ -43,7 +43,7 @@ button {
 .wraper div {
     font-size: 1.2rem;
     padding: 2%;
-    margin-top: 8%;
+    margin-top: 3%;
     background-color: #f6fbff;
     border-radius: 10px;
 }
@@ -55,4 +55,16 @@ button {
 .wraper div:last-child {
     width: fit-content;
     height: fit-content;
+}
+
+footer {
+    margin: 4em;
+    text-align: center;
+    text-decoration: none;
+}
+
+.icons a{
+    font-size: 3em;
+    text-decoration: none;
+    color: #212529;
 }
